@@ -100,23 +100,26 @@ def fast_median(data, group_size=5, min_size=10):
 
 # Usage example and performance verification
 
-results = []
 sizes = [10, 100, 1000, 10000, 100000]
 samples = 100
 
 for size in sizes:
 	runtime = 0
+	last_res = None
 	for _ in range(samples):
 		data = list(range(0, size))
 		shuffle(data)
 
 		before = datetime.now()
-		res = fast_median(data, 5, 3)
+		res = fast_median(data)
 		after = datetime.now()
-		results.append(res)
 
 		delta = after - before
 
 		runtime += (delta.total_seconds() * 1000000 + delta.microseconds / 1000) / samples
 
-	print("{: 7} runs: {} ms".format(size, runtime / 1000))
+		if last_res != None:
+			assert(res == last_res)
+		last_res = res
+
+	print("{: 7} runs: {} ms, result: {}".format(size, runtime / 1000, last_res))
