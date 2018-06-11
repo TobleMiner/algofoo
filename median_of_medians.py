@@ -65,7 +65,7 @@ def fast_median_(data, group_size, min_size, start, end, order):
 	bound_median = partial(fast_median_, data, group_size, min_size)
 	if(n < min_size):
 		# Calculate median directly if list is very short
-		m = median(data, start, end)
+		median(data, start, end)
 		return start + order
 
 	ngroups = ceil(n / group_size)
